@@ -258,6 +258,48 @@ info "llama.cpp is ready! You can start using it now while MLX builds."
 # ────────────────────────────────────────────────────
 if [ "$OS" = "Darwin" ]; then
     step "Setting up MLX (Apple Silicon) ..."
+
+    # MLX builds Metal GPU kernels, which requires the full Xcode app *and*
+    # the Metal Toolchain component. Three distinct failure modes are handled:
+    #   1. Only CLT installed (no metal binary at all)
+    #   2. Full Xcode installed but xcodebuild first-launch not completed
+    #   3. Xcode installed but Metal Toolchain component not downloaded
+    _metal_ok=false
+    if xcrun metal --version >/dev/null 2>&1; then
+        _metal_ok=true
+    fi
+
+    if [ "$_metal_ok" = false ]; then
+        # Distinguish: binary missing vs. present-but-broken
+        if ! xcrun --find metal >/dev/null 2>&1; then
+            err "The 'metal' shader compiler is not available."
+            echo ""
+            echo "  MLX requires the full Xcode app (not just Command Line Tools)."
+            echo "  1. Install Xcode from the App Store:"
+            echo "       https://apps.apple.com/us/app/xcode/id497799835"
+            echo "  2. Switch the active developer directory to Xcode:"
+            echo "       sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer"
+            echo "  3. Accept the Xcode license and complete first-launch setup:"
+            echo "       sudo xcodebuild -license accept"
+            echo "       xcodebuild -runFirstLaunch"
+            echo "  4. Download the Metal Toolchain component:"
+            echo "       xcodebuild -downloadComponent MetalToolchain"
+            echo "  5. Re-run ./setup.sh"
+        else
+            err "The 'metal' compiler is present but cannot execute."
+            echo ""
+            echo "  The Metal Toolchain component may not be installed."
+            echo "  Run the following commands, then re-run ./setup.sh:"
+            echo ""
+            echo "    xcodebuild -runFirstLaunch"
+            echo "    xcodebuild -downloadComponent MetalToolchain"
+        fi
+        echo ""
+        echo "  Note: llama.cpp is already installed and usable without MLX."
+        echo "        Run ./scripts/run_llama.sh to use it now."
+        exit 1
+    fi
+
     if [ -d "mlx" ]; then
         info "MLX repo already present."
     else
