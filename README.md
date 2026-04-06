@@ -246,3 +246,21 @@ Bonsai-demo/
 ```
 
 Items marked with ← are created at setup time and excluded from git.
+
+---
+
+## Appendix — FAQ
+
+### CUDA source build runs out of memory or freezes
+
+**Symptom:** `cmake --build` hangs, the system becomes unresponsive, or the build process is killed with an OOM error when building llama.cpp from source with CUDA enabled.
+
+**Cause:** Compiling CUDA kernels is memory-intensive — each parallel compile job can consume several GB of GPU VRAM and/or system RAM. Running `make -j$(nproc)` on a machine with a low-VRAM GPU (< 16 GB) or limited system RAM can exhaust available memory.
+
+**How the build scripts handle this:** `build_cuda_linux.sh` and `build_cuda_windows.ps1` automatically detect the GPU's VRAM before building. If the maximum detected VRAM is less than 16 GB, the scripts cap parallelism at `-j 2` instead of using all logical CPU cores. You will see a message like:
+
+```
+Detected GPU VRAM: 8.0 GB (< 16 GB) -- limiting CUDA build to -j 2
+```
+
+**Manual override:** If you still encounter OOM errors, reduce parallelism further by editing the build invocation in the relevant script, or close other GPU-heavy applications before building.
