@@ -98,24 +98,16 @@ cmake -B "$BUILD_DIR" -G Ninja \
     -DCMAKE_CUDA_ARCHITECTURES="$CUDA_ARCHS" \
     -DCMAKE_BUILD_TYPE=Release
 
-# Detect GPU VRAM; limit parallelism on low-VRAM machines to avoid OOM during CUDA compilation
-BUILD_JOBS=$(nproc)
-if command -v nvidia-smi &>/dev/null; then
-    MAX_VRAM_MIB=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits 2>/dev/null \
-        | awk 'BEGIN{m=0} /^[0-9]/{v=$1+0; if(v>m) m=v} END{print m}')
-    if [ -n "$MAX_VRAM_MIB" ] && [ "$MAX_VRAM_MIB" -gt 0 ] 2>/dev/null; then
-        MAX_VRAM_GB=$(awk "BEGIN{printf \"%.1f\", $MAX_VRAM_MIB/1024}")
-        if awk "BEGIN{exit !($MAX_VRAM_MIB < 16384)}"; then
-            BUILD_JOBS=2
-            echo "  Detected GPU VRAM: ${MAX_VRAM_GB} GB (< 16 GB) -- limiting CUDA build to -j $BUILD_JOBS"
-        else
-            echo "  Detected GPU VRAM: ${MAX_VRAM_GB} GB -- using -j $BUILD_JOBS (nproc)"
-        fi
-    else
-        echo "  GPU VRAM detection returned empty/invalid -- using -j $BUILD_JOBS (nproc)"
-    fi
+# Limit build parallelism to avoid OOM during CUDA compilation.
+MEM_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo 2>/dev/null)
+MEM_GB=$(( ${MEM_KB:-0} / 1048576 ))
+if [ "$MEM_GB" -lt 16 ] 2>/dev/null; then
+    BUILD_JOBS=2
+    echo "  Low RAM (~${MEM_GB} GB) -- using -j $BUILD_JOBS"
 else
-    echo "  nvidia-smi not found -- using -j $BUILD_JOBS (nproc)"
+    BUILD_JOBS=$(nproc)
+    [ "$BUILD_JOBS" -gt 16 ] && BUILD_JOBS=16
+    echo "  Using -j $BUILD_JOBS"
 fi
 
 cmake --build "$BUILD_DIR" --target $TARGETS -j$BUILD_JOBS

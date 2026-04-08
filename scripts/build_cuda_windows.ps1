@@ -106,26 +106,20 @@ cmake -B $BuildDir `
     -DCMAKE_BUILD_TYPE=Release
 
 # ── Build ──
-$nproc = (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
-$buildJobs = $nproc
-
-# Detect GPU VRAM; use fewer jobs on low-VRAM machines to avoid OOM during CUDA compilation
+# Limit parallelism to avoid OOM during CUDA compilation.
 try {
-    $adapters = Get-CimInstance Win32_VideoController -ErrorAction Stop
-    $maxVramBytes = ($adapters | ForEach-Object { [long]$_.AdapterRAM } | Measure-Object -Maximum).Maximum
-    if ($maxVramBytes -gt 0) {
-        $maxVramGB = [math]::Round($maxVramBytes / 1GB, 1)
-        if ($maxVramBytes -lt 16GB) {
-            $buildJobs = 2
-            Write-Host "  Detected GPU VRAM: ${maxVramGB} GB (< 16 GB) -- limiting CUDA build to -j $buildJobs" -ForegroundColor Yellow
-        } else {
-            Write-Host "  Detected GPU VRAM: ${maxVramGB} GB -- using -j $buildJobs (logical CPU count)"
-        }
+    $sysInfo = Get-CimInstance Win32_ComputerSystem -ErrorAction Stop
+    $memGB = [math]::Floor($sysInfo.TotalPhysicalMemory / 1GB)
+    if ($memGB -lt 16) {
+        $buildJobs = 2
+        Write-Host "  Low RAM (~${memGB} GB) -- using -j $buildJobs" -ForegroundColor Yellow
     } else {
-        Write-Host "  GPU VRAM detection returned 0 or empty -- using -j $buildJobs (logical CPU count)" -ForegroundColor Yellow
+        $buildJobs = [math]::Min(16, $sysInfo.NumberOfLogicalProcessors)
+        Write-Host "  Using -j $buildJobs"
     }
 } catch {
-    Write-Host "  GPU VRAM detection failed ($($_.Exception.Message)) -- using -j $buildJobs (logical CPU count)" -ForegroundColor Yellow
+    $buildJobs = 4
+    Write-Host "  Could not detect RAM -- using -j $buildJobs" -ForegroundColor Yellow
 }
 
 cmake --build $BuildDir --config Release -j $buildJobs
