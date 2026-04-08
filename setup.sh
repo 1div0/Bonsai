@@ -160,13 +160,16 @@ case "$OS" in
         fi
         info "System packages OK."
 
-        # CUDA check (non-fatal)
+        # GPU toolkit check (non-fatal)
         if command -v nvcc >/dev/null 2>&1 || command -v nvidia-smi >/dev/null 2>&1; then
-            info "CUDA toolkit detected."
+            info "NVIDIA CUDA toolkit detected."
+        elif command -v rocminfo >/dev/null 2>&1 || command -v rocm-smi >/dev/null 2>&1 || command -v hipcc >/dev/null 2>&1; then
+            info "AMD ROCm toolkit detected."
         else
-            warn "CUDA toolkit not found. Pre-built CUDA binaries can still be downloaded,"
-            echo "       but building from source requires the CUDA toolkit."
-            echo "       Install from: https://developer.nvidia.com/cuda-downloads"
+            warn "No GPU toolkit found (CUDA or ROCm). Pre-built binaries can still be downloaded,"
+            echo "       but building from source requires a GPU toolkit."
+            echo "       NVIDIA: https://developer.nvidia.com/cuda-downloads"
+            echo "       AMD:    https://rocm.docs.amd.com/en/latest/deploy/linux/installer/install.html"
         fi
         ;;
 
@@ -238,7 +241,7 @@ fi
 #  7. llama.cpp pre-built binaries
 # ────────────────────────────────────────────────────
 _has_binaries=false
-for _d in bin/mac bin/cuda; do
+for _d in bin/mac bin/cuda bin/rocm; do
     ls "$_d"/llama-* >/dev/null 2>&1 && _has_binaries=true && break
 done
 

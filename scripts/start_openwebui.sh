@@ -77,7 +77,7 @@ else
         [ -f "$_m" ] && _model="$DEMO_DIR/$_m" && break
     done
     _bin=""
-    for _d in bin/mac bin/cuda llama.cpp/build/bin llama.cpp/build-mac/bin llama.cpp/build-cuda/bin; do
+    for _d in bin/mac bin/cuda bin/rocm bin/hip llama.cpp/build/bin llama.cpp/build-mac/bin llama.cpp/build-cuda/bin; do
         [ -f "$DEMO_DIR/$_d/llama-server" ] && _bin="$DEMO_DIR/$_d/llama-server" && break
     done
 

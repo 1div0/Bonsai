@@ -18,7 +18,7 @@ done
 
 # ── Find binary (search all known locations) ──
 BIN=""
-for _d in bin/mac bin/cuda llama.cpp/build/bin llama.cpp/build-mac/bin llama.cpp/build-cuda/bin; do
+for _d in bin/mac bin/cuda bin/rocm bin/hip llama.cpp/build/bin llama.cpp/build-mac/bin llama.cpp/build-cuda/bin; do
     [ -f "$DEMO_DIR/$_d/llama-cli" ] && BIN="$DEMO_DIR/$_d/llama-cli" && break
 done
 if [ -z "$BIN" ]; then
