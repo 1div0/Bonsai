@@ -154,7 +154,7 @@ foreach ($p in @(
                     $CudaTag = "12.4"
                     $GpuType = "cuda"
                 } else {
-                    Write-Host "[WARN] Detected CUDA $major.$minor — no matching build available. Falling back to CUDA 12.4." -ForegroundColor Yellow
+                    Write-Host "[WARN] Detected CUDA $major.$minor - no matching build available. Falling back to CUDA 12.4." -ForegroundColor Yellow
                     $CudaTag = "12.4"
                     $GpuType = "cuda"
                 }
