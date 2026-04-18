@@ -15,8 +15,10 @@
   - Write a short summary with the key hardware specs and headline t/s numbers
   - Paste raw llama-bench output as-is (don't reformat, no code blocks — it's a markdown table)
   - Include the exact commands that were run, especially if they differ from suggestions
-  - Save as community-benchmarks/<backend>-<hardware>-<os>.md (lowercase, dashes)
+  - Save as community-benchmarks/ternary-bonsai/<backend>-<hardware>-<os>.md (lowercase, dashes)
 -->
+
+> **Note:** Ternary-Bonsai GGUFs (`Q2_0`, etc.) are coming soon. Once released, submissions for llama.cpp backends will be accepted here.
 
 ## Summary
 
@@ -30,32 +32,32 @@ Run `./setup.sh` first, then find your `llama-bench` binary:
 find bin/ llama.cpp/ -name "llama-bench" -type f 2>/dev/null
 ```
 
-### Bonsai-8B
+### Ternary-Bonsai-8B
 
 ```bash
 # GPU (Metal / CUDA / Vulkan / ROCm) — adjust BENCH path:
 BENCH=bin/mac/llama-bench
-$BENCH -m models/gguf/8B/*.gguf -ngl 99 -fa 1
+$BENCH -m models/gguf/ternary-8B/*.gguf -ngl 99 -fa 1
 
 # CPU only:
-# $BENCH -m models/gguf/8B/*.gguf -ngl 0 -fa 1 -t $(sysctl -n hw.logicalcpu)  # macOS
-# $BENCH -m models/gguf/8B/*.gguf -ngl 0 -fa 1 -t $(nproc)                     # Linux
+# $BENCH -m models/gguf/ternary-8B/*.gguf -ngl 0 -fa 1 -t $(sysctl -n hw.logicalcpu)  # macOS
+# $BENCH -m models/gguf/ternary-8B/*.gguf -ngl 0 -fa 1 -t $(nproc)                     # Linux
 ```
 
 (paste llama-bench output here — raw markdown table, no code block)
 
-### Bonsai-4B
+### Ternary-Bonsai-4B
 
 ```bash
-$BENCH -m models/gguf/4B/*.gguf -ngl 99 -fa 1
+$BENCH -m models/gguf/ternary-4B/*.gguf -ngl 99 -fa 1
 ```
 
 (paste llama-bench output here, or remove if skipped)
 
-### Bonsai-1.7B
+### Ternary-Bonsai-1.7B
 
 ```bash
-$BENCH -m models/gguf/1.7B/*.gguf -ngl 99 -fa 1
+$BENCH -m models/gguf/ternary-1.7B/*.gguf -ngl 99 -fa 1
 ```
 
 (paste llama-bench output here, or remove if skipped)

@@ -6,22 +6,31 @@
 
 <p align="center">
   <a href="https://prismml.com"><b>Website</b></a> &nbsp;|&nbsp;
-  <a href="https://huggingface.co/collections/prism-ml/bonsai"><b>HuggingFace Collection</b></a> &nbsp;|&nbsp;
-  <a href="1-bit-bonsai-8b-whitepaper.pdf"><b>Whitepaper</b></a> &nbsp;|&nbsp;
   <a href="https://github.com/PrismML-Eng/Bonsai-demo"><b>GitHub</b></a> &nbsp;|&nbsp;
   <a href="https://discord.gg/prismml"><b>Discord</b></a>
 </p>
 
+<p align="center">
+  <b>HF Collections:</b>
+  <a href="https://huggingface.co/collections/prism-ml/bonsai">Bonsai (1-bit)</a> ·
+  <a href="https://huggingface.co/collections/prism-ml/ternary-bonsai">Ternary-Bonsai (1.58-bit)</a>
+  &nbsp;|&nbsp;
+  <b>Whitepapers:</b>
+  <a href="1-bit-bonsai-8b-whitepaper.pdf">1-bit Bonsai 8B</a> ·
+  <a href="ternary-bonsai-8b-whitepaper.pdf">Ternary-Bonsai 8B</a>
+</p>
 
-Using this demo you can run 1-bit Bonsai language models locally on Mac (Metal), Linux/Windows (CUDA, Vulkan, ROCm), or CPU.
+
+Using this demo you can run **Bonsai** (1-bit) and **Ternary-Bonsai** language models locally on Mac (Metal), Linux/Windows (CUDA, Vulkan, ROCm), or CPU.
 
 ## Other Bonsai Demos
 
-Below are featured community demos and additional Bonsai demos hosted outside this repository.
+Below are featured community demos and additional Bonsai demos hosted outside this repository. See the full [Bonsai demos collection](https://huggingface.co/collections/prism-ml/bonsai-demos) on HuggingFace for more.
 
 | Demo | Description |
 |------|-------------|
-| [Bonsai WebGPU](https://huggingface.co/spaces/webml-community/bonsai-webgpu) | Community / HuggingFace — runs directly in your browser, no setup required |
+| [Bonsai WebGPU](https://huggingface.co/spaces/webml-community/bonsai-webgpu) | Community / HuggingFace — 1-bit Bonsai, runs directly in your browser, no setup required |
+| [Ternary-Bonsai WebGPU](https://huggingface.co/spaces/webml-community/bonsai-ternary-webgpu) | Community / HuggingFace — Ternary-Bonsai (1.58-bit), runs directly in your browser |
 | [Bonsai GPU Demo](https://huggingface.co/spaces/prism-ml/Bonsai-demo) | Our hosted demo on GPUs on HuggingFace Spaces|
 | [Google Colab Notebook](https://colab.research.google.com/drive/1EzyAaQ2nwDv_1X0jaC5XiVC3ZREg9bdG?usp=sharing) | Run Bonsai in a Google Colab notebook |
 
@@ -45,17 +54,23 @@ Q1_0 support for CPU, Metal, CUDA, and Vulkan backends is already merged into up
 | CPU (optimized x86) | ⏳ Pending | [#21636](https://github.com/ggml-org/llama.cpp/pull/21636) |
 | MLX | ⏳ Pending | [mlx#3161](https://github.com/ml-explore/mlx/pull/3161) |
 
+**Upstream status for 1.58-bit (`Q2_0`, etc.) — coming soon.** llama.cpp GGUF support for Ternary-Bonsai is on the way; PRs will land in our fork first, then upstream. MLX 2-bit is already supported today via stock MLX.
+
 ## Benchmarks
 
 See [community-benchmarks/](community-benchmarks/) for results on different hardware and templates to submit your own.
 
 ## Models
 
-Three model sizes are available: **8B**, **4B**, and **1.7B**, each in two formats:
+Two model families are available, each in sizes **8B**, **4B**, and **1.7B**.
 
 <p align="center">
   <img src="./assets/frontier.svg" width="700" alt="Bonsai accuracy vs model size frontier">
 </p>
+
+### Bonsai (1-bit)
+
+Available in GGUF (llama.cpp) and MLX 1-bit formats.
 
 | Model               | Format | HuggingFace Repo                                                                          |
 |---------------------|--------|-------------------------------------------------------------------------------------------|
@@ -67,6 +82,21 @@ Three model sizes are available: **8B**, **4B**, and **1.7B**, each in two forma
 | Bonsai-1.7B         | MLX    | [prism-ml/Bonsai-1.7B-mlx-1bit](https://huggingface.co/prism-ml/Bonsai-1.7B-mlx-1bit)   |
 
 Set `BONSAI_MODEL` to choose which size to download and run (default: `8B`).
+
+### Ternary-Bonsai (1.58-bit)
+
+MLX 2-bit supported out of the box. GGUFs (`Q2_0`, etc.) coming soon. See the [Ternary-Bonsai HF collection](https://huggingface.co/collections/prism-ml/ternary-bonsai) and the [whitepaper](ternary-bonsai-8b-whitepaper.pdf).
+
+| Model                  | Format        | HuggingFace Repo                                                                                                |
+|------------------------|---------------|-----------------------------------------------------------------------------------------------------------------|
+| Ternary-Bonsai-8B      | MLX (2-bit)   | [prism-ml/Ternary-Bonsai-8B-mlx-2bit](https://huggingface.co/prism-ml/Ternary-Bonsai-8B-mlx-2bit)               |
+| Ternary-Bonsai-4B      | MLX (2-bit)   | [prism-ml/Ternary-Bonsai-4B-mlx-2bit](https://huggingface.co/prism-ml/Ternary-Bonsai-4B-mlx-2bit)               |
+| Ternary-Bonsai-1.7B    | MLX (2-bit)   | [prism-ml/Ternary-Bonsai-1.7B-mlx-2bit](https://huggingface.co/prism-ml/Ternary-Bonsai-1.7B-mlx-2bit)           |
+| Ternary-Bonsai-8B      | GGUF          | [prism-ml/Ternary-Bonsai-8B-gguf](https://huggingface.co/prism-ml/Ternary-Bonsai-8B-gguf) — *coming soon*       |
+| Ternary-Bonsai-4B      | GGUF          | [prism-ml/Ternary-Bonsai-4B-gguf](https://huggingface.co/prism-ml/Ternary-Bonsai-4B-gguf) — *coming soon*       |
+| Ternary-Bonsai-1.7B    | GGUF          | [prism-ml/Ternary-Bonsai-1.7B-gguf](https://huggingface.co/prism-ml/Ternary-Bonsai-1.7B-gguf) — *coming soon*   |
+
+> Ternary-Bonsai is not yet wired into `setup.sh` / `BONSAI_MODEL` — download directly from HuggingFace for now.
 
 ---
 

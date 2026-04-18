@@ -1,46 +1,32 @@
 # Community Benchmarks
 
-Benchmark results submitted by the community running Bonsai models on their own hardware.
+Benchmark results submitted by the community, organized by model family.
 
-## Bonsai Results
+## All Results
 
-| Hardware | Backend | 8B PP512 (t/s) | 8B TG128 (t/s) | Details |
-|----------|---------|----------------|---------------|---------|
-| Apple M4 Pro 48 GB | llama.cpp Metal | 487 | 117 | [link](metal-m4-pro-48gb-macos.md) |
-| NVIDIA DGX Spark (GB10) | llama.cpp CUDA | 3,978 | 159 | [link](cuda-gb10-linux.md) |
-| AMD Strix Halo 128 GB | llama.cpp Vulkan | 831 | 64 | [link](vulkan-strix-halo-128gb-archlinux.md) |
-| AMD Strix Halo 128 GB | llama.cpp ROCm HIP | 1,269 | 94 | [link](rocm-hip-strix-halo-128gb-archlinux.md) |
-| NVIDIA GeForce RTX 3080 10 GB | llama.cpp CUDA | 4,770 | 197 | [link](cuda-rtx3080-linux.md) |
+Combined view across both model families. See the per-family subfolders below for details, submission templates, and filename conventions.
 
-## Ternary Bonsai Results
-Coming soon...
+| Family | Hardware | Backend | 8B PP512 (t/s) | 8B TG128 (t/s) | Details |
+|--------|----------|---------|---------------:|---------------:|---------|
+| Bonsai (1-bit) | Apple M4 Pro 48 GB | llama.cpp Metal | 487 | 117 | [link](bonsai/metal-m4-pro-48gb-macos.md) |
+| Bonsai (1-bit) | NVIDIA DGX Spark (GB10) | llama.cpp CUDA | 3,978 | 159 | [link](bonsai/cuda-gb10-linux.md) |
+| Bonsai (1-bit) | AMD Strix Halo 128 GB | llama.cpp Vulkan | 831 | 64 | [link](bonsai/vulkan-strix-halo-128gb-archlinux.md) |
+| Bonsai (1-bit) | AMD Strix Halo 128 GB | llama.cpp ROCm HIP | 1,325 | 96 | [link](bonsai/rocm-hip-strix-halo-128gb-archlinux.md) |
+| Bonsai (1-bit) | NVIDIA GeForce RTX 3080 10 GB | llama.cpp CUDA | 4,770 | 197 | [link](bonsai/cuda-rtx3080-linux.md) |
+| Bonsai (1-bit) | NVIDIA RTX A2000 Laptop (4 GB) | llama.cpp CUDA | 1,387 | 63 | [link](bonsai/cuda-rtxa2000-debian.md) |
+| Ternary-Bonsai (1.58-bit) | *coming soon* | | | | |
 
-| Hardware | Backend | 8B PP512 (t/s) | 8B TG128 (t/s) | Details |
-|----------|---------|----------------|---------------|---------|
-| |  |  |  | |
+## Model Families
+
+- **[Bonsai (1-bit)](bonsai/)** — the original 1-bit Bonsai family (8B, 4B, 1.7B) in GGUF and MLX 1-bit formats.
+- **[Ternary-Bonsai (1.58-bit)](ternary-bonsai/)** — the ternary Bonsai family (8B, 4B, 1.7B) in MLX 2-bit (GGUF coming soon).
+
+Each subfolder has its own README with results, submission templates, and filename conventions.
 
 ## How to Submit
 
 1. Run `./setup.sh` to download models and binaries
-2. Pick a template and copy it to a new file:
-   - **llama.cpp** (CPU, Metal, CUDA, Vulkan, ROCm): [TEMPLATE-llama-cpp.md](TEMPLATE-llama-cpp.md)
-   - **MLX** (Apple Silicon only): [TEMPLATE-mlx.md](TEMPLATE-mlx.md)
-
-   Use this naming convention:
-
-   **`<backend>-<hardware>-<os>.md`** (lowercase, dashes for spaces)
-
-   | Backend | Example filename |
-   |---------|-----------------|
-   | CPU (x86) | `cpu-i9-14900k-linux.md` |
-   | CPU (ARM) | `cpu-m4-pro-macos.md` |
-   | CUDA | `cuda-rtx4090-linux.md` |
-   | Metal | `metal-m2-ultra-macos.md` |
-   | Vulkan | `vulkan-rx7900xtx-linux.md` |
-   | ROCm/HIP | `rocm-mi300x-linux.md` |
-   | MLX | `mlx-m4-pro-macos.md` |
-
-3. Follow the instructions in the template to run benchmarks and fill in results
-4. Open a PR to this repo
-
-All three model sizes (8B, 4B, 1.7B) are preferred. Skip any that don't fit in memory or are too slow.
+2. Go into the subfolder for your model family and follow its `README.md`:
+   - [bonsai/README.md](bonsai/README.md)
+   - [ternary-bonsai/README.md](ternary-bonsai/README.md)
+3. Open a PR to this repo with your filled-in file placed inside the appropriate subfolder.
