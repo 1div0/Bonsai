@@ -109,9 +109,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
       - name: Setup
         run: ./setup.sh
       - name: llama-cli smoke test (Bonsai Q1_0)
@@ -145,9 +143,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
       - name: Setup
         shell: pwsh
         run: |
@@ -190,9 +186,7 @@ jobs:
             mlx
             models/Bonsai-${{ env.BONSAI_MODEL }}-mlx
             models/Ternary-Bonsai-${{ env.BONSAI_MODEL }}-mlx
-          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-mlx-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-mlx-
+          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-mlx-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
       - name: Setup
         run: ./setup.sh
       - name: llama-cli smoke test (Bonsai Q1_0, CPU)
@@ -238,9 +232,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
       - name: Setup
         run: ./setup.sh
       - name: llama-cli smoke test (Bonsai Q1_0)
@@ -272,9 +264,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
       - name: Setup
         run: ./setup.sh
       - name: llama-cli smoke test (Bonsai Q1_0)
@@ -312,9 +302,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-vulkan-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-vulkan-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-vulkan-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
       - name: Setup
         run: ./setup.sh
       - name: llama-cli Vulkan smoke test (Bonsai Q1_0)
@@ -352,9 +340,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
       - name: Setup
         shell: pwsh
         run: |
@@ -400,9 +386,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-cuda-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-cuda-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-cuda-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
       - name: Setup
         run: ./setup.sh
       - name: llama-cli smoke test (Bonsai Q1_0)
@@ -438,9 +422,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-cuda-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-cuda-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-cuda-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
       - name: Setup
         shell: pwsh
         run: |
@@ -482,9 +464,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-amd-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-amd-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-amd-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
       - name: Setup
         run: ./setup.sh
       - name: llama-cli smoke test (Bonsai Q1_0)
@@ -520,9 +500,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-amd-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-amd-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-amd-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
       - name: Setup
         shell: pwsh
         run: |
@@ -564,9 +542,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-vulkan-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-vulkan-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-vulkan-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh') }}
       - name: Setup
         run: ./setup.sh
       - name: llama-cli smoke test (Bonsai Q1_0)
@@ -602,9 +578,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: bin
-          key: ${{ runner.os }}-${{ runner.arch }}-vulkan-bonsai-bin-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-vulkan-bonsai-bin-
+          key: ${{ runner.os }}-${{ runner.arch }}-vulkan-bonsai-bin-v2-${{ hashFiles('scripts/download_binaries.sh', 'setup.sh', 'setup.ps1') }}
       - name: Setup
         shell: pwsh
         run: |
